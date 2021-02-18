@@ -1,4 +1,4 @@
-package net.binxley.constructor.dto;
+package net.binxly.constructor.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

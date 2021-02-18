@@ -1,6 +1,6 @@
-package net.binxley.constructor.controllers;
+package net.binxly.constructor.controllers;
 
-import net.binxley.constructor.dto.ResponseDTO;
+import net.binxly.constructor.dto.ResponseDTO;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;

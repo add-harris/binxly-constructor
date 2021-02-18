@@ -1,4 +1,4 @@
-package net.binxley.constructor.controllers;
+package net.binxly.constructor.controllers;
 
 import io.quarkus.test.junit.NativeImageTest;
 
