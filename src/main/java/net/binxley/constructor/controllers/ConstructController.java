@@ -1,5 +1,6 @@
 package net.binxley.constructor.controllers;
 
+import net.binxley.constructor.dto.ResponseDTO;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -10,8 +11,8 @@ public class ConstructController {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public String hello() {
-        return "Hello Binxley";
+    public ResponseDTO test() {
+        return new ResponseDTO("Hello Binxley");
     }
 
 }
