@@ -1,18 +1,26 @@
 package net.binxly.constructor.controllers;
 
-import net.binxly.constructor.dto.ResponseDTO;
-import javax.ws.rs.GET;
+import net.binxly.constructor.dto.BuildRequestDTO;
+import net.binxly.constructor.dto.TestResponseDTO;
+
+import javax.ws.rs.Consumes;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
-@Path("/test")
+@Path("/build")
 public class ConstructController {
 
-    @GET
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public ResponseDTO test() {
-        return new ResponseDTO("Hello Binxley");
+    public Response build(BuildRequestDTO buildRequestDTO) {
+        return Response.ok()
+                .entity(new TestResponseDTO(
+                    buildRequestDTO.getTitle()
+                )).build();
     }
 
 }

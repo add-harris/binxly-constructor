@@ -7,7 +7,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.junit.jupiter.api.Assertions.*;
 
 @QuarkusTest
-class ConstructControllerTest {
+class TestControllerTest {
 
     @Test
     public void test_construct_controller() {
