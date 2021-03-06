@@ -1,4 +1,4 @@
 steps:
   - name: 'gcr.io/cloud-builders/docker'
-    args: [ 'build', '-f', 'src/main/docker/Dockerfile.distroless', '-t', 'binxly/constructor', '.']
-
+    args: [ 'build', '-f', 'src/main/docker/Dockerfile.distroless', '-t', 'gcr.io/$PROJECT_ID/binxly-constructor', '.']
+images: ['gcr.io/$PROJECT_ID/binxly-constructor']
