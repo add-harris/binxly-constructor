@@ -7,15 +7,16 @@ message=${message:8}
 
 echo "message captured: ${message}"
 
-#./build-exec.sh
-#git add -f target/constructor-1.0.0-SNAPSHOT-runner
+# build native executable
+./build-exec.sh
 
-git add .
+# add executable
+git add -f target/constructor-1.0.0-SNAPSHOT-runner
+
 git cmt "temp commit"
+
+# this effectively squashes "temp commit" with last commit
 git reset --soft HEAD~2
 git cmt "${message}"
 
-#git cmt "fix-up"
-#git reset --soft HEAD~2
-#git cmt $message
-#git push
+git push
