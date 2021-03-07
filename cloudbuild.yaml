@@ -12,7 +12,7 @@ steps:
      - '--image'
      - 'gcr.io/$PROJECT_ID/binxly-constructor:$COMMIT_SHA'
      - '--region'
-     - 'REGION'
+     - 'europe-west2-c'
      - '--platform'
      - 'managed'
 images: ['gcr.io/$PROJECT_ID/binxly-constructor:$COMMIT_SHA']
