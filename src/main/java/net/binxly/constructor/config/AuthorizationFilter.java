@@ -26,6 +26,8 @@ public class AuthorizationFilter implements ContainerRequestFilter {
     @Override
     public void filter(ContainerRequestContext requestContext) throws IOException {
 
+        System.out.println("Auth active: " + authActive.get());
+
 
         if (authActive.get()) {
             System.out.println("Authenticating Request");
