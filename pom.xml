@@ -8,7 +8,6 @@
 
   <properties>
     <lombok.version>1.18.18</lombok.version>
-    <firebase-admin.version>7.1.1</firebase-admin.version>
     <mockito.version>3.8.0</mockito.version>
     <compiler-plugin.version>3.8.1</compiler-plugin.version>
     <maven.compiler.parameters>true</maven.compiler.parameters>
@@ -62,17 +61,6 @@
       <version>${lombok.version}</version>
       <scope>provided</scope>
     </dependency>
-    <dependency>
-      <groupId>com.google.firebase</groupId>
-      <artifactId>firebase-admin</artifactId>
-      <version>${firebase-admin.version}</version>
-    </dependency>
-<!--    <dependency>-->
-<!--      <groupId>javax.servlet</groupId>-->
-<!--      <artifactId>javax.servlet-api</artifactId>-->
-<!--      <version>4.0.1</version>-->
-<!--      <scope>provided</scope>-->
-<!--    </dependency>-->
 
 <!--    <dependency>-->
 <!--      <groupId>io.quarkus</groupId>-->
