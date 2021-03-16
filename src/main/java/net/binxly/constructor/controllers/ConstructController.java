@@ -21,7 +21,8 @@ public class ConstructController {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response build(BuildRequestDTO buildRequestDTO) {
-        this.constructionService.doNothing();
+
+        this.constructionService.construct(buildRequestDTO);
         // for now echo the input back to user to see it is working
         return Response.ok().entity(buildRequestDTO).build();
     }

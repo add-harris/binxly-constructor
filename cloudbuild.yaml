@@ -1,6 +1,12 @@
 steps:
   - name: 'gcr.io/cloud-builders/docker'
-    args: [ 'build', '-f', 'src/main/docker/Dockerfile.distroless', '-t', 'gcr.io/$PROJECT_ID/binxly-constructor:$COMMIT_SHA', '.']
+    args:
+     - 'build'
+     - '-f'
+     - 'src/main/docker/Dockerfile.distroless'
+     - '-t'
+     - 'gcr.io/$PROJECT_ID/binxly-constructor:$COMMIT_SHA'
+     - '.'
   - name: 'gcr.io/cloud-builders/docker'
     args: [ 'push', 'gcr.io/$PROJECT_ID/binxly-constructor:$COMMIT_SHA' ]
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
@@ -9,6 +15,8 @@ steps:
      - 'run'
      - 'deploy'
      - 'binxly-constructor'
+     - '-e'
+     - 'CORS_ORIGIN="https://login.binxly.net"'
      - '--image'
      - 'gcr.io/$PROJECT_ID/binxly-constructor:$COMMIT_SHA'
      - '--region'

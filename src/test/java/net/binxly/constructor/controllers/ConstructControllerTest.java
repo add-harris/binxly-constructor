@@ -3,6 +3,7 @@ package net.binxly.constructor.controllers;
 import io.quarkus.test.common.http.TestHTTPEndpoint;
 import io.quarkus.test.junit.QuarkusTest;
 import io.quarkus.test.junit.TestProfile;
+import io.quarkus.test.junit.mockito.InjectMock;
 import io.quarkus.test.junit.mockito.InjectSpy;
 import net.binxly.constructor.dto.BuildRequestDTO;
 import net.binxly.constructor.models.NavBar;
@@ -13,6 +14,7 @@ import org.junit.jupiter.api.Test;
 import java.util.List;
 
 import static io.restassured.RestAssured.given;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.times;
 
@@ -22,7 +24,7 @@ import static org.mockito.Mockito.times;
 @TestHTTPEndpoint(ConstructController.class)
 class ConstructControllerTest {
 
-    @InjectSpy
+    @InjectMock
     ConstructionService constructionService;
 
     BuildRequestDTO buildRequestDTO = new BuildRequestDTO(new NavBar("test"), List.of());
@@ -48,7 +50,7 @@ class ConstructControllerTest {
                 .then()
                 .statusCode(200);
 
-        verify(constructionService, times(1)).doNothing();
+        verify(constructionService, times(1)).construct(any(BuildRequestDTO.class));
 
     }
 
