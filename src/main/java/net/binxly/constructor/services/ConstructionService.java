@@ -25,27 +25,31 @@ public class ConstructionService {
     String outputPath;
 
     @Inject
-    @TemplatePath("template.ftl")
+    @TemplatePath("package_json.ftl")
     Template template;
 
     public void construct(BuildRequestDTO buildRequest) {
 
-        String text = buildRequest.getNavBar().getTitle();
         StringWriter stringWriter = new StringWriter();
 
         try {
 
-//            set output file
+            // set output file
             Path newDir = Path.of(outputPath);
-            Path filePath = Path.of(String.format("%s/newfile.html", outputPath));
+            Path filePath = Path.of(String.format("%s/package.json", outputPath));
 
-            Files.createDirectory(newDir);
-            log.info("directory created: {}", filePath);
+            if (!Files.exists(newDir)) {
+                Files.createDirectory(newDir);
+                log.info("directory created: {}", filePath);
+            }
+
+            if (Files.exists(filePath)) {
+                Files.delete(filePath);
+            }
             Files.createFile(filePath);
-            log.info("new file created: newFile.html");
+            log.info("new file created: package.json");
 
-//            do freemarker
-            template.process(Map.of("text", text), stringWriter);
+            template.process(Map.of("projectName", "some-project"), stringWriter);
 
             Files.write(filePath, stringWriter.toString().getBytes(StandardCharsets.UTF_8));
             log.info("successfully written to file");
