@@ -2,7 +2,7 @@ package net.binxly.constructor.services;
 
 import freemarker.template.Template;
 import io.quarkiverse.freemarker.TemplatePath;
-import net.binxly.constructor.dto.BuildRequestDTO;
+import net.binxly.constructor.models.BuildRequest;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,9 +16,9 @@ import java.nio.file.Path;
 import java.util.Map;
 
 @ApplicationScoped
-public class ConstructionService {
+public class ConfigConstructionService {
 
-    static Logger log = LoggerFactory.getLogger(ConstructionService.class);
+    static Logger log = LoggerFactory.getLogger(ConfigConstructionService.class);
 
     @Inject
     @ConfigProperty(name = "build.filepath.output")
@@ -28,7 +28,7 @@ public class ConstructionService {
     @TemplatePath("package_json.ftl")
     Template template;
 
-    public void construct(BuildRequestDTO buildRequest) {
+    public void construct(String projectName) {
 
         StringWriter stringWriter = new StringWriter();
 
@@ -38,18 +38,13 @@ public class ConstructionService {
             Path newDir = Path.of(outputPath);
             Path filePath = Path.of(String.format("%s/package.json", outputPath));
 
-            if (!Files.exists(newDir)) {
-                Files.createDirectory(newDir);
-                log.info("directory created: {}", filePath);
-            }
+            Files.createDirectory(newDir);
+            log.info("directory created: {}", filePath);
 
-            if (Files.exists(filePath)) {
-                Files.delete(filePath);
-            }
             Files.createFile(filePath);
             log.info("new file created: package.json");
 
-            template.process(Map.of("projectName", "some-project"), stringWriter);
+            template.process(Map.of("projectName", projectName), stringWriter);
 
             Files.write(filePath, stringWriter.toString().getBytes(StandardCharsets.UTF_8));
             log.info("successfully written to file");

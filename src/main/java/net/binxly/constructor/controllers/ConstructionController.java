@@ -1,7 +1,7 @@
 package net.binxly.constructor.controllers;
 
-import net.binxly.constructor.dto.BuildRequestDTO;
-import net.binxly.constructor.services.ConstructionService;
+import net.binxly.constructor.models.BuildRequest;
+import net.binxly.constructor.services.OrchestrationService;
 
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
@@ -12,19 +12,19 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 @Path("/build")
-public class ConstructController {
+public class ConstructionController {
 
     @Inject
-    ConstructionService constructionService;
+    OrchestrationService orchestrationService;
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response build(BuildRequestDTO buildRequestDTO) {
+    public Response build(BuildRequest buildRequest) {
 
-        this.constructionService.construct(buildRequestDTO);
+        this.orchestrationService.orchestrate(buildRequest);
         // for now echo the input back to user to see it is working
-        return Response.ok().entity(buildRequestDTO).build();
+        return Response.ok().entity(buildRequest).build();
     }
 
 }

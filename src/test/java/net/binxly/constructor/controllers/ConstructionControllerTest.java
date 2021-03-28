@@ -4,11 +4,10 @@ import io.quarkus.test.common.http.TestHTTPEndpoint;
 import io.quarkus.test.junit.QuarkusTest;
 import io.quarkus.test.junit.TestProfile;
 import io.quarkus.test.junit.mockito.InjectMock;
-import io.quarkus.test.junit.mockito.InjectSpy;
-import net.binxly.constructor.dto.BuildRequestDTO;
+import net.binxly.constructor.models.BuildRequest;
 import net.binxly.constructor.models.NavBar;
-import net.binxly.constructor.services.ConstructionService;
 import net.binxly.constructor.TestProfileConfig;
+import net.binxly.constructor.services.OrchestrationService;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
@@ -21,20 +20,20 @@ import static org.mockito.Mockito.times;
 
 @QuarkusTest
 @TestProfile(TestProfileConfig.class)
-@TestHTTPEndpoint(ConstructController.class)
-class ConstructControllerTest {
+@TestHTTPEndpoint(ConstructionController.class)
+class ConstructionControllerTest {
 
     @InjectMock
-    ConstructionService constructionService;
+    OrchestrationService orchestrationService;
 
-    BuildRequestDTO buildRequestDTO = new BuildRequestDTO(new NavBar("test"), List.of());
+    BuildRequest buildRequest = new BuildRequest("test-project", new NavBar("test"), List.of());
 
     @Test
     public void construct_controller_returns_200() {
 
         given()
             .contentType("application/json")
-            .with().body(buildRequestDTO)
+            .with().body(buildRequest)
             .when().post()
             .then()
             .statusCode(200);
@@ -45,12 +44,12 @@ class ConstructControllerTest {
 
         given()
                 .contentType("application/json")
-                .with().body(buildRequestDTO)
+                .with().body(buildRequest)
                 .when().post()
                 .then()
                 .statusCode(200);
 
-        verify(constructionService, times(1)).construct(any(BuildRequestDTO.class));
+        verify(orchestrationService, times(1)).orchestrate(any(BuildRequest.class));
 
     }
 
