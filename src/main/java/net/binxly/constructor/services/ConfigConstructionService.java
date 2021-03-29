@@ -1,14 +1,15 @@
 package net.binxly.constructor.services;
 
 import freemarker.template.Template;
+import freemarker.template.TemplateException;
 import io.quarkiverse.freemarker.TemplatePath;
-import net.binxly.constructor.models.BuildRequest;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
+import java.io.IOException;
 import java.io.StringWriter;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -26,32 +27,30 @@ public class ConfigConstructionService {
 
     @Inject
     @TemplatePath("package_json.ftl")
-    Template template;
+    Template packageJsonTemplate;
 
-    public void construct(String projectName) {
+    @Inject
+    @TemplatePath("nuxt_config.ftl")
+    Template nuxtConfigTemplate;
+
+    public void construct(String id, String projectName) throws IOException, TemplateException {
+        constructConfigFile(packageJsonTemplate, id, projectName, "package.json");
+        constructConfigFile(nuxtConfigTemplate, id, projectName, "nuxt.config.js");
+    }
+
+    private void constructConfigFile(Template template, String id, String projectName, String fileName) throws IOException, TemplateException {
 
         StringWriter stringWriter = new StringWriter();
 
-        try {
+        Path filePath = Path.of(String.format("%s/%s/%s", outputPath, id, fileName));
 
-            // set output file
-            Path newDir = Path.of(outputPath);
-            Path filePath = Path.of(String.format("%s/package.json", outputPath));
+        Files.createFile(filePath);
+        log.info("new file created: {}", fileName);
 
-            Files.createDirectory(newDir);
-            log.info("directory created: {}", filePath);
+        template.process(Map.of("projectName", projectName), stringWriter);
 
-            Files.createFile(filePath);
-            log.info("new file created: package.json");
-
-            template.process(Map.of("projectName", projectName), stringWriter);
-
-            Files.write(filePath, stringWriter.toString().getBytes(StandardCharsets.UTF_8));
-            log.info("successfully written to file");
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        Files.write(filePath, stringWriter.toString().getBytes(StandardCharsets.UTF_8));
+        log.info("successfully written to file");
 
     }
 

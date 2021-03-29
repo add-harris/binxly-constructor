@@ -14,6 +14,9 @@ import java.util.List;
 public class BuildRequest {
 
     @NonNull
+    String id;
+
+    @NonNull
     String projectName;
 
     @NonNull

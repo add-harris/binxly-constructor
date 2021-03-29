@@ -15,11 +15,19 @@ public class OrchestrationService {
     @Inject
     ConfigConstructionService configConstructionService;
 
+    @Inject
+    DirectoryService directoryService;
 
     public void orchestrate(BuildRequest buildRequest) {
 
         log.info("begin orchestration");
-        this.configConstructionService.construct(buildRequest.getProjectName());
+        try {
+            this.directoryService.createBuildDir(buildRequest.getId());
+            this.configConstructionService.construct(buildRequest.getId(), buildRequest.getProjectName());
+            this.directoryService.cleanup(buildRequest.getId());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
     }
 

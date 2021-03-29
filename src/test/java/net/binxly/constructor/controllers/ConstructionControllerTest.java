@@ -11,6 +11,7 @@ import net.binxly.constructor.services.OrchestrationService;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
+import java.util.UUID;
 
 import static io.restassured.RestAssured.given;
 import static org.mockito.ArgumentMatchers.any;
@@ -26,7 +27,11 @@ class ConstructionControllerTest {
     @InjectMock
     OrchestrationService orchestrationService;
 
-    BuildRequest buildRequest = new BuildRequest("test-project", new NavBar("test"), List.of());
+    BuildRequest buildRequest = new BuildRequest(
+            "123456",
+            "test-project",
+            new NavBar("test"),
+            List.of());
 
     @Test
     public void construct_controller_returns_200() {
