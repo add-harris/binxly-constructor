@@ -16,7 +16,7 @@ steps:
      - 'deploy'
      - 'binxly-constructor'
      - '--set-env-vars'
-     - 'CORS_ORIGIN="https://login.binxly.net"'
+     - 'CORS_ORIGIN=https://login.binxly.net'
      - '--image'
      - 'gcr.io/$PROJECT_ID/binxly-constructor:$COMMIT_SHA'
      - '--region'
