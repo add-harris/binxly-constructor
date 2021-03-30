@@ -11,7 +11,6 @@
         "test": "jest"
     },
     "dependencies": {
-        "@nuxtjs/axios": "^5.13.1",
         "@nuxtjs/pwa": "^3.3.5",
         "core-js": "^3.9.1",
         "nuxt": "^2.15.3"

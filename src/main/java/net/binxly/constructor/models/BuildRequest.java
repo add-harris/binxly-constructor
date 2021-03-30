@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import net.binxly.constructor.models.components.Component;
+import net.binxly.constructor.models.components.NavBar;
 
 import java.util.List;
 

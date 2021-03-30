@@ -5,13 +5,12 @@ import io.quarkus.test.junit.QuarkusTest;
 import io.quarkus.test.junit.TestProfile;
 import io.quarkus.test.junit.mockito.InjectMock;
 import net.binxly.constructor.models.BuildRequest;
-import net.binxly.constructor.models.NavBar;
+import net.binxly.constructor.models.components.NavBar;
 import net.binxly.constructor.TestProfileConfig;
 import net.binxly.constructor.services.OrchestrationService;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
-import java.util.UUID;
 
 import static io.restassured.RestAssured.given;
 import static org.mockito.ArgumentMatchers.any;

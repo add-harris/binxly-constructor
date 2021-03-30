@@ -3,6 +3,10 @@ package net.binxly.constructor.services;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
 import io.quarkiverse.freemarker.TemplatePath;
+import net.binxly.constructor.models.files.FileModel;
+import net.binxly.constructor.models.files.NuxtConfig;
+import net.binxly.constructor.models.files.PackageJson;
+import net.binxly.constructor.services.utils.FileService;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,11 +14,6 @@ import org.slf4j.LoggerFactory;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import java.io.IOException;
-import java.io.StringWriter;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.util.Map;
 
 @ApplicationScoped
 public class ConfigConstructionService {
@@ -26,6 +25,9 @@ public class ConfigConstructionService {
     String outputPath;
 
     @Inject
+    FileService fileService;
+
+    @Inject
     @TemplatePath("package_json.ftl")
     Template packageJsonTemplate;
 
@@ -34,24 +36,14 @@ public class ConfigConstructionService {
     Template nuxtConfigTemplate;
 
     public void construct(String id, String projectName) throws IOException, TemplateException {
-        constructConfigFile(packageJsonTemplate, id, projectName, "package.json");
-        constructConfigFile(nuxtConfigTemplate, id, projectName, "nuxt.config.js");
+        PackageJson packageJson = new PackageJson(projectName);
+        NuxtConfig nuxtConfig = new NuxtConfig(projectName);
+        constructConfigFile(id, "package.json", packageJson, packageJsonTemplate);
+        constructConfigFile(id, "nuxt.config.js", nuxtConfig, nuxtConfigTemplate);
     }
 
-    private void constructConfigFile(Template template, String id, String projectName, String fileName) throws IOException, TemplateException {
-
-        StringWriter stringWriter = new StringWriter();
-
-        Path filePath = Path.of(String.format("%s/%s/%s", outputPath, id, fileName));
-
-        Files.createFile(filePath);
-        log.info("new file created: {}", fileName);
-
-        template.process(Map.of("projectName", projectName), stringWriter);
-
-        Files.write(filePath, stringWriter.toString().getBytes(StandardCharsets.UTF_8));
-        log.info("successfully written to file");
-
+    private void constructConfigFile(String id, String fileName, FileModel fileModel, Template template) throws IOException, TemplateException {
+        this.fileService.constructFile(id, fileName, fileModel, template);
     }
 
 }
