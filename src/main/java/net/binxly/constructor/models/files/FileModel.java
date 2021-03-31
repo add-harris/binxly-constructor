@@ -1,7 +1,10 @@
 package net.binxly.constructor.models.files;
 
-public class FileModel {
+import lombok.Getter;
 
-    String type;
+@Getter
+public abstract class FileModel {
+
+    String fileName;
 
 }

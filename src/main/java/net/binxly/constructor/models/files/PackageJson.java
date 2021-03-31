@@ -1,13 +1,16 @@
 package net.binxly.constructor.models.files;
 
-import lombok.Data;
 import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
 
 @Data
+@Builder
 @AllArgsConstructor
-@NoArgsConstructor
 public class PackageJson extends FileModel {
+
+    @Builder.Default
+    String fileName = "package.json";
 
     String projectName;
 

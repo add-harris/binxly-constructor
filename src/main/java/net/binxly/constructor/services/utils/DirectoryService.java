@@ -22,12 +22,12 @@ public class DirectoryService {
     String outputPath;
 
     public void createBuildDir(String id) throws IOException {
-        Path buildDir = createPath(id);
+        Path buildDir = Path.of(createPath(id));
         createDir(buildDir);
     }
 
     public void createSubDir(String id, String dirName) throws IOException {
-        Path subDir = createPath(id, dirName);
+        Path subDir = Path.of(createPath(id, dirName));
         createDir(subDir);
     }
 
@@ -36,21 +36,21 @@ public class DirectoryService {
         log.info("directory created: {}", path.toString());
     }
 
-    Path createPath(String id) {
+    public String createPath(String id) {
         return createPath(id, null);
     }
 
-    Path createPath(String id, String subDir) {
+    public String createPath(String id, String subDir) {
         if (subDir != null) {
-            return Path.of(String.format("%s/%s/%s", outputPath, id, subDir));
+            return String.format("%s/%s/%s", outputPath, id, subDir);
         } else {
-            return Path.of(String.format("%s/%s", outputPath, id));
+            return String.format("%s/%s", outputPath, id);
         }
     }
 
     public void cleanup(String id) {
 
-        Path pathToBeDeleted = createPath(id);
+        Path pathToBeDeleted = Path.of(createPath(id));
 
         if (Files.exists(pathToBeDeleted)) {
             log.info("cleanup started");

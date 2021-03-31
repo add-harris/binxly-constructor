@@ -11,6 +11,10 @@ mvn3 compile quarkus:dev
 
 Note: `mvn3` refers to my local copy of maven 3.6.3 as a minimum of 3.6.2 is required for quarkus. 
 
+```shell
+curl https://repo.maven.apache.org/maven2/org/apache/maven/apache-maven/3.6.3/apache-maven-3.6.3-bin.zip -o apache-maven-3.6.3-bin.zipcurl https://repo.maven.apache.org/maven2/org/apache/maven/apache-maven/3.6.3/apache-maven-3.6.3-bin.zip -o apache-maven-3.6.3-bin.zip
+```
+
 ## Creating a native executable
 
 You can create a native executable using: 

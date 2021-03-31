@@ -6,8 +6,8 @@ import io.quarkiverse.freemarker.TemplatePath;
 import net.binxly.constructor.models.files.FileModel;
 import net.binxly.constructor.models.files.NuxtConfig;
 import net.binxly.constructor.models.files.PackageJson;
+import net.binxly.constructor.services.utils.DirectoryService;
 import net.binxly.constructor.services.utils.FileService;
-import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -21,11 +21,10 @@ public class ConfigConstructionService {
     static Logger log = LoggerFactory.getLogger(ConfigConstructionService.class);
 
     @Inject
-    @ConfigProperty(name = "build.filepath.output")
-    String outputPath;
+    FileService fileService;
 
     @Inject
-    FileService fileService;
+    DirectoryService directoryService;
 
     @Inject
     @TemplatePath("package_json.ftl")
@@ -36,14 +35,15 @@ public class ConfigConstructionService {
     Template nuxtConfigTemplate;
 
     public void construct(String id, String projectName) throws IOException, TemplateException {
-        PackageJson packageJson = new PackageJson(projectName);
-        NuxtConfig nuxtConfig = new NuxtConfig(projectName);
-        constructConfigFile(id, "package.json", packageJson, packageJsonTemplate);
-        constructConfigFile(id, "nuxt.config.js", nuxtConfig, nuxtConfigTemplate);
+        PackageJson packageJson = PackageJson.builder().projectName(projectName).build();
+        NuxtConfig nuxtConfig = NuxtConfig.builder().projectName(projectName).build();
+        constructConfigFile(id, packageJson, packageJsonTemplate);
+        constructConfigFile(id, nuxtConfig, nuxtConfigTemplate);
     }
 
-    private void constructConfigFile(String id, String fileName, FileModel fileModel, Template template) throws IOException, TemplateException {
-        this.fileService.constructFile(id, fileName, fileModel, template);
+    private void constructConfigFile(String id, FileModel fileModel, Template template) throws IOException, TemplateException {
+        log.info("building config files");
+        this.fileService.constructFile(this.directoryService.createPath(id), fileModel, template);
     }
 
 }
