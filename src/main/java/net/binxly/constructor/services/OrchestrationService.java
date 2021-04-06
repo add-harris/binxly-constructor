@@ -1,7 +1,7 @@
 package net.binxly.constructor.services;
 
 import net.binxly.constructor.models.BuildRequest;
-import net.binxly.constructor.services.utils.DirectoryService;
+import net.binxly.constructor.services.utils.StructureService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -17,7 +17,7 @@ public class OrchestrationService {
     ConfigConstructionService configConstructionService;
 
     @Inject
-    DirectoryService directoryService;
+    StructureService structureService;
 
     @Inject
     PageConstructionService pageConstructionService;
@@ -26,7 +26,7 @@ public class OrchestrationService {
 
         log.info("begin orchestration");
         try {
-            this.directoryService.createBuildDir(buildRequest.getId());
+            this.structureService.createBuildDir(buildRequest.getId());
             this.configConstructionService.construct(buildRequest.getId(), buildRequest.getProjectName());
             this.pageConstructionService.construct(buildRequest.getId());
 //            this.directoryService.cleanup(buildRequest.getId());
