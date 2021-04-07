@@ -63,6 +63,10 @@ public class StructureService {
         return Path.of(getPathString(id, sub));
     }
 
+    public Path getTarPath(String id) {
+        return getPath(id.concat(TAR_EXTENSION));
+    }
+
     public void constructFile(String filePath, FileModel fileModel, Template template) throws IOException, TemplateException {
         StringWriter stringWriter = new StringWriter();
 

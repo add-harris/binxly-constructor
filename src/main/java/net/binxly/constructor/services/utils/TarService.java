@@ -15,7 +15,6 @@ import java.io.OutputStream;
 import java.nio.file.*;
 import java.nio.file.attribute.BasicFileAttributes;
 
-import static net.binxly.constructor.config.Constants.TAR_EXTENSION;
 
 @ApplicationScoped
 public class TarService {
@@ -26,10 +25,13 @@ public class TarService {
     @ConfigProperty(name = "build.filepath.output")
     String outputPath;
 
-    public void tarDirectory(String dirPath) throws IOException {
+    @Inject
+    StructureService structureService;
 
-        Path sourcePath = Path.of(dirPath);
-        Path tarPath = Path.of(dirPath.concat(TAR_EXTENSION));
+    public void tarDirectory(String id) throws IOException {
+
+        Path sourcePath = this.structureService.getPath(id);
+        Path tarPath = this.structureService.getTarPath(id);
 
         try (OutputStream fOut = Files.newOutputStream(tarPath);
              GzipCompressorOutputStream gzOut = new GzipCompressorOutputStream(new BufferedOutputStream(fOut));

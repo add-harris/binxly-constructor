@@ -33,7 +33,7 @@ public class OrchestrationService {
             this.structureService.createBuildDir(buildRequest.getId());
             this.configConstructionService.construct(buildRequest.getId(), buildRequest.getProjectName());
             this.pageConstructionService.construct(buildRequest.getId());
-            this.tarService.tarDirectory(this.structureService.getPathString(buildRequest.getId()));
+            this.tarService.tarDirectory(buildRequest.getId());
             this.structureService.cleanup(buildRequest.getId());
         } catch (Exception e) {
             e.printStackTrace();
