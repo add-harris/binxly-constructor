@@ -31,6 +31,7 @@ public class ConfigConstructionService {
     Template nuxtConfigTemplate;
 
     public void construct(String id, String projectName) throws IOException, TemplateException {
+        log.info("building config files");
         PackageJson packageJson = PackageJson.builder().projectName(projectName).build();
         NuxtConfig nuxtConfig = NuxtConfig.builder().projectName(projectName).build();
         constructConfigFile(id, packageJson, packageJsonTemplate);
@@ -38,8 +39,7 @@ public class ConfigConstructionService {
     }
 
     private void constructConfigFile(String id, FileModel fileModel, Template template) throws IOException, TemplateException {
-        log.info("building config files");
-        this.structureService.constructFile(this.structureService.createPath(id), fileModel, template);
+        this.structureService.constructFile(this.structureService.getPathString(id), fileModel, template);
     }
 
 }

@@ -9,6 +9,8 @@
   <properties>
     <lombok.version>1.18.18</lombok.version>
     <freemarker.version>0.2.2</freemarker.version>
+    <google.cloud.version>0.5.0</google.cloud.version>
+    <apache.commons.compress>1.20</apache.commons.compress>
     <mockito.version>3.8.0</mockito.version>
     <compiler-plugin.version>3.8.1</compiler-plugin.version>
     <maven.compiler.parameters>true</maven.compiler.parameters>
@@ -60,6 +62,16 @@
       <groupId>io.quarkiverse.freemarker</groupId>
       <artifactId>quarkus-freemarker</artifactId>
       <version>${freemarker.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>io.quarkiverse.googlecloudservices</groupId>
+      <artifactId>quarkus-google-cloud-storage</artifactId>
+      <version>${google.cloud.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.commons</groupId>
+      <artifactId>commons-compress</artifactId>
+      <version>${apache.commons.compress}</version>
     </dependency>
     <dependency>
       <groupId>org.projectlombok</groupId>

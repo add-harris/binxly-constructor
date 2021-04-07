@@ -17,6 +17,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Comparator;
 
+import static net.binxly.constructor.config.Constants.TAR_EXTENSION;
+
 @ApplicationScoped
 public class StructureService {
 
@@ -27,12 +29,12 @@ public class StructureService {
     String outputPath;
 
     public void createBuildDir(String id) throws IOException {
-        Path buildDir = Path.of(createPath(id));
+        Path buildDir = Path.of(getPathString(id));
         createDir(buildDir);
     }
 
     public void createSubDir(String id, String dirName) throws IOException {
-        Path subDir = Path.of(createPath(id, dirName));
+        Path subDir = Path.of(getPathString(id, dirName));
         createDir(subDir);
     }
 
@@ -41,11 +43,11 @@ public class StructureService {
         log.info("directory created: {}", path.toString());
     }
 
-    public String createPath(String id) {
-        return createPath(id, null);
+    public String getPathString(String id) {
+        return getPathString(id, null);
     }
 
-    public String createPath(String id, String subDir) {
+    public String getPathString(String id, String subDir) {
         if (subDir != null) {
             return String.format("%s/%s/%s", outputPath, id, subDir);
         } else {
@@ -53,8 +55,15 @@ public class StructureService {
         }
     }
 
+    public Path getPath(String id) {
+        return Path.of(getPathString(id));
+    }
+
+    public Path getPath(String id, String sub) {
+        return Path.of(getPathString(id, sub));
+    }
+
     public void constructFile(String filePath, FileModel fileModel, Template template) throws IOException, TemplateException {
-        log.info("constructing {}", filePath.toString());
         StringWriter stringWriter = new StringWriter();
 
         Path path = Path.of(String.format("%s/%s", filePath, fileModel.getFileName()));
@@ -70,21 +79,20 @@ public class StructureService {
 
     public void cleanup(String id) {
 
-        Path pathToBeDeleted = Path.of(createPath(id));
+        Path buildDirPath = getPath(id);
+        Path tarPath = getPath(id.concat(TAR_EXTENSION));
 
-        if (Files.exists(pathToBeDeleted)) {
-            log.info("cleanup started");
-            try {
-                Files.walk(pathToBeDeleted)
-                        .sorted(Comparator.reverseOrder())
-                        .map(Path::toFile)
-                        .forEach(File::delete);
-                log.info("cleanup completed");
-            } catch (IOException exception) {
-                log.info("cleanup failed");
-                exception.printStackTrace();
-            }
-
+        log.info("cleanup started");
+        try {
+            Files.walk(buildDirPath)
+                    .sorted(Comparator.reverseOrder())
+                    .map(Path::toFile)
+                    .forEach(File::delete);
+            Files.delete(tarPath);
+            log.info("cleanup completed");
+        } catch (IOException exception) {
+            log.info("cleanup failed");
+            exception.printStackTrace();
         }
     }
 

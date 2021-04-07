@@ -25,8 +25,9 @@ public class PageConstructionService {
     Template indexTemplate;
 
     public void construct(String id) throws IOException, TemplateException {
+        log.info("building page files");
         this.structureService.createSubDir(id, "pages");
-        String path = this.structureService.createPath(id, "pages");
+        String path = this.structureService.getPathString(id, "pages");
         IndexVue indexVue = IndexVue.builder().build();
         this.structureService.constructFile(path, indexVue, indexTemplate);
     }

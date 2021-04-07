@@ -2,6 +2,7 @@ package net.binxly.constructor.services;
 
 import net.binxly.constructor.models.BuildRequest;
 import net.binxly.constructor.services.utils.StructureService;
+import net.binxly.constructor.services.utils.TarService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -14,10 +15,13 @@ public class OrchestrationService {
     static Logger log = LoggerFactory.getLogger(OrchestrationService.class);
 
     @Inject
-    ConfigConstructionService configConstructionService;
+    StructureService structureService;
 
     @Inject
-    StructureService structureService;
+    TarService tarService;
+
+    @Inject
+    ConfigConstructionService configConstructionService;
 
     @Inject
     PageConstructionService pageConstructionService;
@@ -29,10 +33,11 @@ public class OrchestrationService {
             this.structureService.createBuildDir(buildRequest.getId());
             this.configConstructionService.construct(buildRequest.getId(), buildRequest.getProjectName());
             this.pageConstructionService.construct(buildRequest.getId());
-//            this.directoryService.cleanup(buildRequest.getId());
+            this.tarService.tarDirectory(this.structureService.getPathString(buildRequest.getId()));
+            this.structureService.cleanup(buildRequest.getId());
         } catch (Exception e) {
             e.printStackTrace();
-//            this.directoryService.cleanup(buildRequest.getId());
+            this.structureService.cleanup(buildRequest.getId());
         }
 
     }
