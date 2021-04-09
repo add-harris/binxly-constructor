@@ -63,11 +63,11 @@
       <artifactId>quarkus-freemarker</artifactId>
       <version>${freemarker.version}</version>
     </dependency>
-    <dependency>
-      <groupId>io.quarkiverse.googlecloudservices</groupId>
-      <artifactId>quarkus-google-cloud-storage</artifactId>
-      <version>${google.cloud.version}</version>
-    </dependency>
+<!--    <dependency>-->
+<!--      <groupId>io.quarkiverse.googlecloudservices</groupId>-->
+<!--      <artifactId>quarkus-google-cloud-storage</artifactId>-->
+<!--      <version>${google.cloud.version}</version>-->
+<!--    </dependency>-->
     <dependency>
       <groupId>org.apache.commons</groupId>
       <artifactId>commons-compress</artifactId>

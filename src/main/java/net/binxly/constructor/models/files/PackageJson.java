@@ -14,4 +14,7 @@ public class PackageJson extends FileModel {
 
     String projectName;
 
+    public String getProjectName() {
+        return projectName;
+    }
 }

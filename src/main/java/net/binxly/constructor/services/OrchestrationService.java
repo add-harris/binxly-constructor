@@ -1,6 +1,7 @@
 package net.binxly.constructor.services;
 
 import net.binxly.constructor.models.BuildRequest;
+import net.binxly.constructor.services.utils.StorageService;
 import net.binxly.constructor.services.utils.StructureService;
 import net.binxly.constructor.services.utils.TarService;
 import org.slf4j.Logger;
@@ -26,6 +27,10 @@ public class OrchestrationService {
     @Inject
     PageConstructionService pageConstructionService;
 
+
+    @Inject
+    StorageService storageService;
+
     public void orchestrate(BuildRequest buildRequest) {
 
         log.info("begin orchestration");
@@ -34,7 +39,8 @@ public class OrchestrationService {
             this.configConstructionService.construct(buildRequest.getId(), buildRequest.getProjectName());
             this.pageConstructionService.construct(buildRequest.getId());
             this.tarService.tarDirectory(buildRequest.getId());
-            this.structureService.cleanup(buildRequest.getId());
+//            this.storageService.pushToStorage(buildRequest.getId());
+//            this.structureService.cleanup(buildRequest.getId());
         } catch (Exception e) {
             e.printStackTrace();
             this.structureService.cleanup(buildRequest.getId());

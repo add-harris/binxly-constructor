@@ -1,6 +1,6 @@
 <#-- freemarker -->
 {
-    "name": "${projectName}",
+    "name": "${model.projectName}",
     "version": "1.0.0",
     "private": true,
     "scripts": {

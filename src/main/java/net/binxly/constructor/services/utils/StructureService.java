@@ -1,8 +1,5 @@
 package net.binxly.constructor.services.utils;
 
-import freemarker.template.Template;
-import freemarker.template.TemplateException;
-import net.binxly.constructor.models.files.FileModel;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,8 +8,6 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import java.io.File;
 import java.io.IOException;
-import java.io.StringWriter;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Comparator;
@@ -65,20 +60,6 @@ public class StructureService {
 
     public Path getTarPath(String id) {
         return getPath(id.concat(TAR_EXTENSION));
-    }
-
-    public void constructFile(String filePath, FileModel fileModel, Template template) throws IOException, TemplateException {
-        StringWriter stringWriter = new StringWriter();
-
-        Path path = Path.of(String.format("%s/%s", filePath, fileModel.getFileName()));
-
-        Files.createFile(path);
-        log.info("new file created: {}", fileModel.getFileName());
-
-        template.process(fileModel, stringWriter);
-
-        Files.write(path, stringWriter.toString().getBytes(StandardCharsets.UTF_8));
-        log.info("successfully written to file");
     }
 
     public void cleanup(String id) {

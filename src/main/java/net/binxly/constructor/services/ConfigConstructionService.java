@@ -6,6 +6,7 @@ import io.quarkiverse.freemarker.TemplatePath;
 import net.binxly.constructor.models.files.FileModel;
 import net.binxly.constructor.models.files.NuxtConfig;
 import net.binxly.constructor.models.files.PackageJson;
+import net.binxly.constructor.services.utils.FreemarkerService;
 import net.binxly.constructor.services.utils.StructureService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,6 +24,9 @@ public class ConfigConstructionService {
     StructureService structureService;
 
     @Inject
+    FreemarkerService freemarkerService;
+
+    @Inject
     @TemplatePath("package_json.ftl")
     Template packageJsonTemplate;
 
@@ -31,7 +35,7 @@ public class ConfigConstructionService {
     Template nuxtConfigTemplate;
 
     public void construct(String id, String projectName) throws IOException, TemplateException {
-        log.info("building config files");
+        log.info("building config files, id: {}, projectName: {}", id, projectName);
         PackageJson packageJson = PackageJson.builder().projectName(projectName).build();
         NuxtConfig nuxtConfig = NuxtConfig.builder().projectName(projectName).build();
         constructConfigFile(id, packageJson, packageJsonTemplate);
@@ -39,7 +43,7 @@ public class ConfigConstructionService {
     }
 
     private void constructConfigFile(String id, FileModel fileModel, Template template) throws IOException, TemplateException {
-        this.structureService.constructFile(this.structureService.getPathString(id), fileModel, template);
+        this.freemarkerService.constructFile(this.structureService.getPathString(id), fileModel, template);
     }
 
 }

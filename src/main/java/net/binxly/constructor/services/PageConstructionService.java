@@ -4,6 +4,7 @@ import freemarker.template.Template;
 import freemarker.template.TemplateException;
 import io.quarkiverse.freemarker.TemplatePath;
 import net.binxly.constructor.models.files.IndexVue;
+import net.binxly.constructor.services.utils.FreemarkerService;
 import net.binxly.constructor.services.utils.StructureService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,6 +22,9 @@ public class PageConstructionService {
     StructureService structureService;
 
     @Inject
+    FreemarkerService freemarkerService;
+
+    @Inject
     @TemplatePath("index.ftl")
     Template indexTemplate;
 
@@ -29,7 +33,7 @@ public class PageConstructionService {
         this.structureService.createSubDir(id, "pages");
         String path = this.structureService.getPathString(id, "pages");
         IndexVue indexVue = IndexVue.builder().build();
-        this.structureService.constructFile(path, indexVue, indexTemplate);
+        this.freemarkerService.constructFile(path, indexVue, indexTemplate);
     }
 
 }
