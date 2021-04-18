@@ -8,7 +8,6 @@
 
   <properties>
     <lombok.version>1.18.18</lombok.version>
-    <freemarker.version>0.2.2</freemarker.version>
     <google.cloud.version>0.5.0</google.cloud.version>
     <apache.commons.compress>1.20</apache.commons.compress>
     <mockito.version>3.8.0</mockito.version>
@@ -59,9 +58,8 @@
       <artifactId>quarkus-smallrye-metrics</artifactId>
     </dependency>
     <dependency>
-      <groupId>io.quarkiverse.freemarker</groupId>
-      <artifactId>quarkus-freemarker</artifactId>
-      <version>${freemarker.version}</version>
+      <groupId>io.quarkus</groupId>
+      <artifactId>quarkus-resteasy-qute</artifactId>
     </dependency>
 <!--    <dependency>-->
 <!--      <groupId>io.quarkiverse.googlecloudservices</groupId>-->

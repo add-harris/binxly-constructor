@@ -27,7 +27,6 @@ public class OrchestrationService {
     @Inject
     PageConstructionService pageConstructionService;
 
-
     @Inject
     StorageService storageService;
 
@@ -40,7 +39,7 @@ public class OrchestrationService {
             this.pageConstructionService.construct(buildRequest.getId());
             this.tarService.tarDirectory(buildRequest.getId());
 //            this.storageService.pushToStorage(buildRequest.getId());
-//            this.structureService.cleanup(buildRequest.getId());
+            this.structureService.cleanup(buildRequest.getId());
         } catch (Exception e) {
             e.printStackTrace();
             this.structureService.cleanup(buildRequest.getId());

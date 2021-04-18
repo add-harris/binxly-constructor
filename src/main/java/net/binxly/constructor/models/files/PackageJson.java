@@ -12,9 +12,6 @@ public class PackageJson extends FileModel {
     @Builder.Default
     String fileName = "package.json";
 
-    String projectName;
+    public String projectName;
 
-    public String getProjectName() {
-        return projectName;
-    }
 }

@@ -12,6 +12,6 @@ public class NuxtConfig extends FileModel {
     @Builder.Default
     String fileName = "nuxt.config.js";
 
-    String projectName;
+    public String projectName;
 
 }
