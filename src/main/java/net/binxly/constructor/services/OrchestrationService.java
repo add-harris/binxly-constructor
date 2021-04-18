@@ -38,7 +38,7 @@ public class OrchestrationService {
             this.configConstructionService.construct(buildRequest.getId(), buildRequest.getProjectName());
             this.pageConstructionService.construct(buildRequest.getId());
             this.tarService.tarDirectory(buildRequest.getId());
-//            this.storageService.pushToStorage(buildRequest.getId());
+            this.storageService.pushToStorage(buildRequest.getId());
             this.structureService.cleanup(buildRequest.getId());
         } catch (Exception e) {
             e.printStackTrace();

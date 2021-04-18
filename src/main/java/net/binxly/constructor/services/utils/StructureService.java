@@ -6,7 +6,6 @@ import org.slf4j.LoggerFactory;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
-import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -61,12 +60,6 @@ public class StructureService {
 
     public Path getTarPath(String id) {
         return getPath(id.concat(TAR_EXTENSION));
-    }
-
-    public void catFile(String filePath, String fileName) throws IOException {
-        var out = new BufferedOutputStream(System.out);
-        Files.copy(Path.of(filePath + "/" + fileName), out);
-        out.flush();
     }
 
     public void cleanup(String id) {

@@ -3,7 +3,7 @@ steps:
     args:
      - 'build'
      - '-f'
-     - 'src/main/docker/Dockerfile.distroless'
+     - 'src/main/docker/Dockerfile.native'
      - '-t'
      - 'gcr.io/$PROJECT_ID/binxly-constructor:$COMMIT_SHA'
      - '.'
