@@ -10,5 +10,6 @@ public class Templates {
     public static native TemplateInstance packageJsonTemplate();
     public static native TemplateInstance nuxtConfigTemplate();
     public static native TemplateInstance indexTemplate();
+    public static native TemplateInstance layoutTemplate();
 
 }

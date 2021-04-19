@@ -25,6 +25,9 @@ public class OrchestrationService {
     ConfigConstructionService configConstructionService;
 
     @Inject
+    LayoutConstructionService layoutConstructionService;
+
+    @Inject
     PageConstructionService pageConstructionService;
 
     @Inject
@@ -36,10 +39,11 @@ public class OrchestrationService {
         try {
             this.structureService.createBuildDir(buildRequest.getId());
             this.configConstructionService.construct(buildRequest.getId(), buildRequest.getProjectName());
+            this.layoutConstructionService.construct(buildRequest.getId(), buildRequest.getNavBar());
             this.pageConstructionService.construct(buildRequest.getId());
-            this.tarService.tarDirectory(buildRequest.getId());
-            this.storageService.pushToStorage(buildRequest.getId());
-            this.structureService.cleanup(buildRequest.getId());
+//            this.tarService.tarDirectory(buildRequest.getId());
+//            this.storageService.pushToStorage(buildRequest.getId());
+//            this.structureService.cleanup(buildRequest.getId());
         } catch (Exception e) {
             e.printStackTrace();
             this.structureService.cleanup(buildRequest.getId());

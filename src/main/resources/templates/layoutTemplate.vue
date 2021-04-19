@@ -1,3 +1,4 @@
+{@net.binxly.constructor.models.files.LayoutVue model}
 <template>
   <v-app dark>
 
@@ -23,7 +24,7 @@
 export default {
   data () {
     return {
-      title: '{model.title}'
+      title: '{model.navBar.title}'
     }
   }
 }

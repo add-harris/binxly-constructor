@@ -1,3 +1,4 @@
+{@net.binxly.constructor.models.files.IndexVue model}
 <template>
 
   <v-row justify="center" align="center">
