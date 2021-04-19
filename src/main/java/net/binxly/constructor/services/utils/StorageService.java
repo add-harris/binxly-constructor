@@ -12,6 +12,8 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
+import static net.binxly.constructor.config.Constants.TAR_EXTENSION;
+
 @ApplicationScoped
 public class StorageService {
 
@@ -20,6 +22,10 @@ public class StorageService {
     @Inject
     @ConfigProperty(name = "storage.bucket.name")
     String bucketName;
+
+    @Inject
+    @ConfigProperty(name = "storage.active")
+    Boolean storageActive;
 
     @Inject
     Storage storage;
@@ -32,12 +38,16 @@ public class StorageService {
     // https://cloud.google.com/storage/docs/uploading-objects#storage-upload-object-code-sample
 
     public void pushToStorage(String id) throws IOException {
-        log.info("pushing to storage, build: {}", id);
-        Bucket bucket = storage.get(this.bucketName);
-        log.info("bucket got");
-        Path tarPath = this.structureService.getTarPath(id);
-        bucket.create(id, Files.readAllBytes(tarPath));
-        log.info("successfully pushed to storage");
+        if (storageActive) {
+            log.info("pushing to storage, build: {}", id);
+            Bucket bucket = storage.get(this.bucketName);
+            log.info("bucket got");
+            Path tarPath = this.structureService.getTarPath(id);
+            bucket.create(id.concat(TAR_EXTENSION), Files.readAllBytes(tarPath));
+            log.info("successfully pushed to storage");
+        } else {
+            log.info("not pushing to storage, storage.active property set to false");
+        }
     }
 
 }
