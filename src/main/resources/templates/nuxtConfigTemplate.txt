@@ -5,6 +5,10 @@ export default {
     // Target: https://go.nuxtjs.dev/config-target
     target: 'static',
 
+    server: {
+      port: 3001
+    },
+
     // Global page headers: https://go.nuxtjs.dev/config-head
     head: {
         titleTemplate: '%s - binxly-template',
@@ -20,7 +24,9 @@ export default {
     },
 
     // Global CSS: https://go.nuxtjs.dev/config-css
-    css: [],
+    css: [
+        { src: 'binxly-vue-lib/dist/binxly-vue-lib.css', lang: 'css' }
+    ],
 
     // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
     plugins: [],
@@ -51,7 +57,7 @@ export default {
     vuetify: {
         customVariables: ['~/assets/variables.scss'],
         theme: {
-            dark: true,
+            dark: false,
             themes: {
                 dark: {
                     primary: colors.blue.darken2,

@@ -3,6 +3,8 @@
 
   <v-row justify="center" align="center">
 
+    <SecondComp></SecondComp>
+
     <v-col cols="12" sm="8" md="6">
 
       <v-card class="mt-6" >
@@ -30,9 +32,15 @@
 
 <script>
 
+import { SecondComp } from "binxly-vue-lib"
+
 export default {
 
   name: 'index',
+
+  components: {
+    SecondComp
+  },
 
   data() {
     return {
